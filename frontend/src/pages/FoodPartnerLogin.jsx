@@ -2,11 +2,43 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function FoodPartnerLogin() {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/auth/food-partner/login",
+        { email, password },
+        { withCredentials: true } // IMPORTANT
+      );
+      if(res.data.message === "Login successful") {
+        console.log("Login successful", res.data);
+        navigate("/");
+      }
+      else {
+        alert("Login failed: " + res.data.message);
+      }
+    } catch (err) {
+      console.error(err.response?.data?.message || "Login failed");
+    }
+  };
+
+
+
+
   return (
     <AuthLayout title="Food Partner Login" subtitle="Sign in to manage your offerings">
-      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-3">
           <TextInput label="Business email" type="email" name="email" placeholder="business@example.com" />
           <TextInput label="Password" type="password" name="password" placeholder="********" />

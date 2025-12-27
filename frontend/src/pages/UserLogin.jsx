@@ -2,13 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import TextInput from "../components/TextInput";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../store/authSlice";
+
 import axios from "axios";
 
 export default function UserLogin() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,8 +27,6 @@ export default function UserLogin() {
       else {
         alert("Login failed: " + res.data.message);
       }
-      // backend sets cookie automatically
-      dispatch(loginSuccess(res.data)); // user info only
     } catch (err) {
       console.error(err.response?.data?.message || "Login failed");
     }

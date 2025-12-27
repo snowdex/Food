@@ -2,13 +2,47 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function FoodPartnerRegister() {
+
+  const navigate = useNavigate();
+
+
+
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const res = await axios.post('http://localhost:3000/api/v1/auth/food-partner/signup', {name, email, password}, { withCredentials: true });
+      if(res.data.message === "User registered successfully") {
+        console.log("Registration successful", res.data);
+        
+        navigate("/");  
+      }else{
+        alert("Registration failed: " + res.data.message);
+      }
+    } catch (error) {
+      console.log(error.response?.data?.message);
+    }
+  }
+
+
+
+
+
+
+
   return (
     <AuthLayout title="Partner sign up" subtitle="Create a food partner account">
-      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-3">
-          <TextInput label="Business name" name="businessName" placeholder="Your business" />
+          <TextInput label="Business name" name="name" placeholder="Your business" />
           <TextInput label="Business email" type="email" name="email" placeholder="business@example.com" />
           <TextInput label="Password" type="password" name="password" placeholder="Create a password" />
         </div>

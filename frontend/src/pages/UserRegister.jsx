@@ -1,12 +1,44 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
+import axios from 'axios'
 
 export default function UserRegister() {
+
+  
+  const navigate = useNavigate();
+
+
+
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const res = await axios.post('http://localhost:3000/api/v1/auth/user/signup', {name, email, password}, { withCredentials: true });
+      if(res.data.message === "User registered successfully") {
+        console.log("Registration successful", res.data);
+        
+        navigate("/");  
+      }else{
+        alert("Registration failed: " + res.data.message);
+      }
+    } catch (error) {
+      console.log(error.response?.data?.message);
+    }
+  }
+
+
+
+
+
   return (
     <AuthLayout title="Create account" subtitle="Register as an app user">
-      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-3">
           <TextInput label="Full name" name="name" placeholder="Your name" />
           <TextInput label="Email" type="email" name="email" placeholder="you@example.com" />
