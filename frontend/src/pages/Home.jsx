@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchFoodItems = async () => {
       try {
-        const res = await fetch("/api/v1/food", {
+        const res = await fetch("http://localhost:3000/api/v1/food", {
           credentials: "include",
         });
 
@@ -133,6 +133,8 @@ const Home = () => {
               </div>
 
               {/* Dish name */}
+              <div className="flex items-center justify-between">
+              <div>
               <p className="text-base font-bold leading-tight">
                 {item.name}
               </p>
@@ -141,6 +143,14 @@ const Home = () => {
               <p className="text-sm text-white/90 line-clamp-2">
                 {item.description}
               </p>
+              </div>
+              <a
+                  href={item.storeUrl}
+                  className="text-white bg-blue-600 px-3 py-1 rounded-full font-medium hover:bg-white hover:text-black transition"
+                >
+                  Order Now
+                </a>
+              </div>
             </div>
           </section>
         ))}
