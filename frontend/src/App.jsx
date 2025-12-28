@@ -5,6 +5,7 @@ import UserRegister from "./pages/UserRegister";
 import FoodPartnerLogin from "./pages/FoodPartnerLogin";
 import Home from "./pages/Home";
 import FoodPartnerRegister from "./pages/FoodPartnerRegister";
+import FPHome from "./pages/FPHome";
 
 function App() {
   return (
@@ -14,6 +15,12 @@ function App() {
         path="/"
         element={
           <Home />
+        }
+      />
+      <Route
+        path="/food-partner/home"
+        element={
+          <FPHome />
         }
       />
       <Route path="/user/login" element={<UserLogin />} />

@@ -20,10 +20,10 @@ export default function FoodPartnerRegister() {
 
     try {
       const res = await axios.post('http://localhost:3000/api/v1/auth/food-partner/signup', {name, email, password}, { withCredentials: true });
-      if(res.data.message === "User registered successfully") {
+      if(res.data.message === "Food Partner registered successfully") {
         console.log("Registration successful", res.data);
         
-        navigate("/");  
+        navigate("/food-partner/home");  
       }else{
         alert("Registration failed: " + res.data.message);
       }

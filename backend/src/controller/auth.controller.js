@@ -9,13 +9,13 @@ const register = async (req,  res)=>{
     try{
         const { name, password, email } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const existingUser = await userModel.findOne({ $or: [ { name }, { email } ] });
+        const existingUser = await userModel.findOne({email});
         if(existingUser){
-            return res.status(400).json({ message: 'Name or Email already exists' });
+            return res.status(400).json({ message: 'Email already exists' });
         }
         const newUser = new userModel({
             name,
-                password: hashedPassword,
+            password: hashedPassword,
             email
         });
         
@@ -24,7 +24,7 @@ const register = async (req,  res)=>{
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
         
         res.cookie("token", token)
-        res.status(201).json({ message: 'User registered successfully', userId: newUser._id, email: newUser.email, name: newUser.name});
+        res.status(201).json({ message: 'User registered successfully', user:{name: newUser.name, email: newUser.email, id: newUser._id} });
         
     }catch(error){
         res.status(500).json({ message: 'Server Error', error: error.message });

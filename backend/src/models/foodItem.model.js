@@ -17,8 +17,8 @@ const foodItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FoodPartner',
         required: true,
-    }
-});
+    },
+}, { timestamps: true });
 
 const FoodItem = mongoose.model('FoodItem', foodItemSchema);
 module.exports = FoodItem;

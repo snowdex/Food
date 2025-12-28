@@ -21,9 +21,9 @@ export default function FoodPartnerLogin() {
         { email, password },
         { withCredentials: true } // IMPORTANT
       );
-      if(res.data.message === "Login successful") {
+      if(res.data.message === "Food-Partner Login successful") {
         console.log("Login successful", res.data);
-        navigate("/");
+        navigate("/food-partner/home");
       }
       else {
         alert("Login failed: " + res.data.message);
