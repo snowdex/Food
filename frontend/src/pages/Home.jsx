@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../store/authSlice";
 
 const Home = () => {
   const containerRef = useRef(null);
   const [videos, setVideos] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate()
 
   // 🔹 FETCH VIDEOS FROM BACKEND
   useEffect(() => {
@@ -81,17 +85,28 @@ const Home = () => {
     setIsScrolled(container.scrollTop !== 0);
   }, []);
 
+  const dispatch = useDispatch()
+
+
+  const onTap = ()=>{
+    dispatch(logout());
+    navigate('/user/login')
+  }
+
+
+
   return (
     <div className="relative">
       {/* HEADER */}
       <header
-        className={`fixed top-0 left-0 right-0 z-30 flex items-center h-14 px-4 text-white font-bold text-lg tracking-wide transition-colors duration-200 ${
+        className={`fixed top-0 left-0 right-0 z-30 flex items-center justify-between h-14 px-4 text-white font-bold text-lg tracking-wide transition-colors duration-200 ${
           isPlaying && !isScrolled
             ? "bg-transparent"
             : "bg-black/40 backdrop-blur-sm border-b border-white/10"
         }`}
       >
-        mealio
+      <div>mealio</div>
+      <button onClick={onTap} className="bg-red-600 rounded-2xl px-2 py-1 ">Logout</button>
       </header>
 
       {/* FEED */}
@@ -113,7 +128,7 @@ const Home = () => {
             />
 
             {/* GRADIENT */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
             {/* OVERLAY */}
             <div className="absolute left-4 right-4 bottom-8 z-10 text-white pointer-events-auto space-y-1">
@@ -144,12 +159,12 @@ const Home = () => {
                 {item.description}
               </p>
               </div>
-              <a
-                  href={item.storeUrl}
+              <button
+                  onClick={()=>navigate("/user/checkout")}
                   className="text-white bg-blue-600 px-3 py-1 rounded-full font-medium hover:bg-white hover:text-black transition"
                 >
                   Order Now
-                </a>
+                </button>
               </div>
             </div>
           </section>

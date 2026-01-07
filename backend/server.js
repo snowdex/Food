@@ -24,7 +24,7 @@ connectDB();
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/food', foodRouter);
-
+http://localhost:5173/
 module.exports = app;
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

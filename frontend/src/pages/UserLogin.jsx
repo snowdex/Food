@@ -4,9 +4,12 @@ import AuthLayout from "../components/AuthLayout";
 import TextInput from "../components/TextInput";
 
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/authSlice";
 
 export default function UserLogin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ export default function UserLogin() {
       );
       if(res.data.message === "Login successful") {
         console.log("Login successful", res.data);
+        dispatch(loginSuccess(res.data.user));
         navigate("/");
       }
       else {
