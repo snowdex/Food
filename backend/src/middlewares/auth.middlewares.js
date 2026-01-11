@@ -1,56 +1,50 @@
-const foodPartnerModel = require('../models/foodPartner.model');
-const userModel = require('../models/user.model');
-const jwt = require('jsonwebtoken');
+const foodPartnerModel = require("../models/foodPartner.model");
+const userModel = require("../models/user.model");
+const jwt = require("jsonwebtoken");
 
 // Middleware to verify Food-Partner JWT token
 const verifyfoodPartnerToken = async (req, res, next) => {
-    try {
-        const token = req.cookies?.token;
-        // console.log("TOKEN:", token);
+  const token = req.cookies.foodPartnerToken;
 
-        if (!token) {
-            return res.status(401).json({ message: 'No token' });
-        }
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log("DECODED:", decoded);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        const foodPartner = await foodPartnerModel.findById(decoded.FpId);
-        // console.log("FOOD PARTNER FROM DB:", foodPartner);
+    const partner = await foodPartnerModel.findById(decoded.foodPartnerId);
 
-        req.foodPartner = foodPartner;
-        next();
-
-    } catch (err) {
-        return res.status(401).json({ error: err.message });
+    if (!partner) {
+      return res.status(401).json({ message: "Invalid token" });
     }
+
+    req.foodPartner = partner;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Token verification failed" });
+  }
 };
 
-const authUserMiddleware = async(req, res, next) => {
-    
-    const token = req.cookies?.token;
 
-    if(!token){
-        return res.status(401).json({message: 'Please login to access this resource'});
-    }
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+const authUserMiddleware = async (req, res, next) => {
+  const token = req.cookies?.token;
 
-        const user = await userModel.findById(decoded.userId).select('-password');
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Please login to access this resource" });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user = user;
-        next();
+    const user = await userModel.findById(decoded.userId).select("-password");
 
- 
-    } catch (error) {
-        return res.status(401).json({ error: err.message });
-    }
-
-
-
-
-}
-
-
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: err.message });
+  }
+};
 
 module.exports = { verifyfoodPartnerToken, authUserMiddleware };

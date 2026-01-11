@@ -4,7 +4,7 @@ import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { loginSuccess } from '../store/authSlice'
+import { setUser } from '../store/authSlice'
 
 export default function UserRegister() {  
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function UserRegister() {
       const res = await axios.post('http://localhost:3000/api/v1/auth/user/signup', {name, email, password}, { withCredentials: true });
       if(res.data.message === "User registered successfully") {
         console.log("Registration successful", res.data); 
-        dispatch(loginSuccess(res.data.user));
+        dispatch(setUser(res.data.user));
         navigate("/");  
       }else{
         alert("Registration failed: " + res.data.message);

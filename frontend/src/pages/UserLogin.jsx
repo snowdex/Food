@@ -5,7 +5,7 @@ import TextInput from "../components/TextInput";
 
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../store/authSlice";
+import { setUser } from "../store/authSlice";
 
 export default function UserLogin() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function UserLogin() {
       );
       if(res.data.message === "Login successful") {
         console.log("Login successful", res.data);
-        dispatch(loginSuccess(res.data.user));
+        dispatch(setUser(res.data.user));
         navigate("/");
       }
       else {

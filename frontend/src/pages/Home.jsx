@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../store/authSlice";
+import { clearAuth } from "../store/authSlice";
 
 const Home = () => {
   const containerRef = useRef(null);
@@ -89,7 +89,7 @@ const Home = () => {
 
 
   const onTap = ()=>{
-    dispatch(logout());
+    dispatch(clearAuth());
     navigate('/user/login')
   }
 

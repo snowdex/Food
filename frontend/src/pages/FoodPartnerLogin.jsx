@@ -4,11 +4,12 @@ import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setPartner } from '../store/authSlice'
 
 export default function FoodPartnerLogin() {
-
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,8 +22,9 @@ export default function FoodPartnerLogin() {
         { email, password },
         { withCredentials: true } // IMPORTANT
       );
-      if(res.data.message === "Food-Partner Login successful") {
-        console.log("Login successful", res.data);
+      if(res.data.message === "Food Partner login successful") {
+        console.log("Login successful", res.data); 
+        dispatch(setPartner(res.data.foodPartner));
         navigate("/food-partner/home");
       }
       else {

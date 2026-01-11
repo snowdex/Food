@@ -4,11 +4,13 @@ import AuthLayout from '../components/AuthLayout'
 import TextInput from '../components/TextInput'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setPartner } from '../store/authSlice'
 
 export default function FoodPartnerRegister() {
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
 
 
 
@@ -22,7 +24,7 @@ export default function FoodPartnerRegister() {
       const res = await axios.post('http://localhost:3000/api/v1/auth/food-partner/signup', {name, email, password}, { withCredentials: true });
       if(res.data.message === "Food Partner registered successfully") {
         console.log("Registration successful", res.data);
-        
+        dispatch(setPartner(res.data.foodPartner));
         navigate("/food-partner/home");  
       }else{
         alert("Registration failed: " + res.data.message);
