@@ -9,9 +9,10 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.set("trust proxy", 1);
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://YOUR-FRONTEND.vercel.app"],
     credentials: true,
   })
 );
