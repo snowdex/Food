@@ -181,45 +181,44 @@ const FPHome = () => {
         {/* UPLOAD */}
         <aside>
           <div className="bg-white rounded-xl shadow-sm p-6">
-  <h2 className="font-semibold mb-4">Upload New Food Video</h2>
+            <h2 className="font-semibold mb-4">Upload New Food Video</h2>
 
-  <input
-    type="file"
-    accept="video/*"
-    onChange={(e) => setSelectedFile(e.target.files[0])}
-    className="mb-3 block w-full text-sm border rounded px-2 py-1"
-  />
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+              className="mb-3 block w-full text-sm border rounded px-2 py-1"
+            />
 
-  {selectedFile && (
-    <p className="text-sm text-gray-600 mb-2">
-      Selected: {selectedFile.name}
-    </p>
-  )}
+            {selectedFile && (
+              <p className="text-sm text-gray-600 mb-2">
+                Selected: {selectedFile.name}
+              </p>
+            )}
 
-  <input
-    type="text"
-    placeholder="Food name"
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-    className="mb-2 w-full border rounded px-2 py-1"
-  />
+            <input
+              type="text"
+              placeholder="Food name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mb-2 w-full border rounded px-2 py-1"
+            />
 
-  <textarea
-    placeholder="Description"
-    value={description}
-    onChange={(e) => setDescription(e.target.value)}
-    className="mb-3 w-full border rounded px-2 py-1"
-  />
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="mb-3 w-full border rounded px-2 py-1"
+            />
 
-  <button
-    onClick={handleUpload}
-    disabled={uploading}
-    className="w-full py-2 bg-indigo-600 text-white rounded"
-  >
-    {uploading ? "Uploading..." : "Upload"}
-  </button>
-</div>
-
+            <button
+              onClick={handleUpload}
+              disabled={uploading}
+              className="w-full py-2 bg-indigo-600 text-white rounded"
+            >
+              {uploading ? "Uploading..." : "Upload"}
+            </button>
+          </div>
         </aside>
 
         {/* VIDEOS */}
