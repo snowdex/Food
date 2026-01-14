@@ -20,7 +20,8 @@ function App() {
     const checkAuth = async () => {
       try {
         const userRes = await axios.get(
-          "http://localhost:3000/api/v1/auth/user/me",
+          import.meta.env.VITE_API_URL
++"/api/v1/auth/user/me",
           { withCredentials: true }
         );
         dispatch(setUser(userRes.data));
@@ -31,7 +32,8 @@ function App() {
 
       try {
         const fpRes = await axios.get(
-          "http://localhost:3000/api/v1/auth/food-partner/me",
+          import.meta.env.VITE_API_URL
++"/api/v1/auth/food-partner/me",
           { withCredentials: true }
         );
         dispatch(setPartner(fpRes.data));

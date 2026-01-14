@@ -19,7 +19,8 @@ export default function UserLogin() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/auth/user/login",
+        import.meta.env.VITE_API_URL
++"/api/v1/auth/user/login",
         { email, password },
         { withCredentials: true } // IMPORTANT
       );

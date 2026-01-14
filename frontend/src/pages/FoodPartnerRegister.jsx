@@ -21,7 +21,8 @@ export default function FoodPartnerRegister() {
     const password = e.target.password.value;
 
     try {
-      const res = await axios.post('http://localhost:3000/api/v1/auth/food-partner/signup', {name, email, password}, { withCredentials: true });
+      const res = await axios.post(import.meta.env.VITE_API_URL
++'/api/v1/auth/food-partner/signup', {name, email, password}, { withCredentials: true });
       if(res.data.message === "Food Partner registered successfully") {
         console.log("Registration successful", res.data);
         dispatch(setPartner(res.data.foodPartner));

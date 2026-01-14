@@ -75,7 +75,8 @@ const FPHome = () => {
       navigate("/food-partner/login");
     } else {
       axios
-        .get("http://localhost:3000/api/v1/food/partner/items", {
+        .get(import.meta.env.VITE_API_URL
++"/api/v1/food/partner/items", {
           withCredentials: true,
         })
         .then((res) => {
@@ -93,7 +94,8 @@ const FPHome = () => {
   /* ---------- Logout ---------- */
   const handleLogout = async () => {
     await axios.post(
-      "http://localhost:3000/api/v1/auth/food-partner/logout",
+      import.meta.env.VITE_API_URL
++"/api/v1/auth/food-partner/logout",
       {},
       { withCredentials: true }
     );
@@ -118,7 +120,8 @@ const FPHome = () => {
       formData.append("description", description);
 
       const res = await axios.post(
-        "http://localhost:3000/api/v1/food",
+        import.meta.env.VITE_API_URL
++"/api/v1/food",
         formData,
         {
           withCredentials: true,
